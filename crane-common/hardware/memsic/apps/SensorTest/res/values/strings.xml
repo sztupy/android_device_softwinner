@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sensor Test</string>
+    <string name="title">Sensor Data</string>
+    <string name="acc_field">Accelerometer</string>
+    <string name="mag_field">Magnetic Field</string>
+    <string name="orien_field">Orientation</string>
+    <string name="field_x">X</string>
+    <string name="field_y">Y</string>
+    <string name="field_z">Z</string>
+    <string name="azimuth">Azimuth</string>
+    <string name="pitch">Pitch</string>
+    <string name="roll">Roll</string>
+</resources>
