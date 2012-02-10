@@ -19,10 +19,13 @@
 #define Softwinner_HARDWARE_RENDERER_H_
 
 #include <media/stagefright/VideoRenderer.h>
+#include <VideoRenderer_alt.h>
 #include <utils/RefBase.h>
 #include <utils/Vector.h>
 
 #include <OMX_Component.h>
+
+#include <sun4i_extensions.h>
 
 namespace android {
 
@@ -35,8 +38,8 @@ public:
             const sp<ISurface> &surface,
             size_t displayWidth, size_t displayHeight,
             size_t decodedWidth, size_t decodedHeight,
-            OMX_COLOR_FORMATTYPE colorFormat,
-            int32_t screen_id);
+            OMX_COLOR_FORMATTYPE colorFormat
+            /*int32_t screen_id*/);
 
     virtual ~SoftwinnerHardwareRenderer();
 

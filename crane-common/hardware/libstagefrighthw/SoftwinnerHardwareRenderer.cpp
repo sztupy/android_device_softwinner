@@ -38,7 +38,7 @@ SoftwinnerHardwareRenderer::SoftwinnerHardwareRenderer(
         const sp<ISurface> &surface,
         size_t displayWidth, size_t displayHeight,
         size_t decodedWidth, size_t decodedHeight,
-        OMX_COLOR_FORMATTYPE colorFormat,int screen_id)
+        OMX_COLOR_FORMATTYPE colorFormat/*,int screen_id*/)
     : mISurface(surface),
       mDisplayWidth(displayWidth),
       mDisplayHeight(displayHeight),
@@ -60,7 +60,7 @@ SoftwinnerHardwareRenderer::SoftwinnerHardwareRenderer(
 	//LOGD("==== SoftwinnerHardwareRenderer mColorFormat:%d", mColorFormat);
 
     sp<OverlayRef> ref = mISurface->createOverlay(
-            mDecodedWidth, mDecodedHeight, mColorFormat, 0, screen_id);
+            mDecodedWidth, mDecodedHeight, mColorFormat, 0/*, screen_id*/);
 
     if (ref.get() == NULL) {
         LOGE("Unable to create the overlay!");

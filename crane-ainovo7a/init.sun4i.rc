@@ -1,3 +1,4 @@
+
 on fs
     mount ext4 /dev/block/nandc /system wait noatime nodev barrier=0
 
@@ -13,7 +14,7 @@ on fs
     mount ext4 /dev/block/nandg /cache wait noatime nosuid nodev barrier=0
 	setupfs /dev/block/nandg
     mount ext4 /dev/block/nandg /cache wait noatime nosuid nodev barrier=0
-    format_userdata Teclast
+    format_userdata Novo7
 
 on boot
 	chown root root /system/xbin/su
@@ -23,38 +24,52 @@ on boot
 	chmod 0777 /drv	
 
 #insmod key & tp driver
+#	insmod /drv/ft5x_ts.ko
 	insmod /drv/goodix_touch.ko
-	insmod /drv/ft5x_ts.ko
+#	insmod /drv/sun4i-ts.ko
 	insmod /drv/sun4i-keyboard.ko
 
+# touch key
+    insmod /drv/hv2605.ko
+	
 # insmod mali driver 
 	insmod /drv/ump.ko
 	insmod /drv/mali.ko
 
+# insmod vibrator	
+	insmod /drv/sun4i-vibrator.ko 
+	chmod 777 /sys/class/timed_output/sun4i-vibrator/enable
+
+# insmod gsensor driver
+	insmod /drv/bma250.ko
+
 # nano wifi module and firmware 
 	chmod 0777 /drv/x_mac.axf
 
-# csi module
+#csi module
 	insmod /drv/videobuf-core.ko
- 	insmod /drv/videobuf-dma-contig.ko
-	insmod /drv/sp0838.ko
-# 	insmod /drv/hi704.ko
- 	insmod /drv/sun4i_csi0.ko
+	insmod /drv/videobuf-dma-contig.ko
+	insmod /drv/gc0308.ko
+	insmod /drv/gt2005.ko
+	insmod /drv/sun4i_csi1.ko
+	insmod /drv/sun4i_csi0.ko
 
 #usb net module	
 	insmod /drv/usbnet.ko
 	insmod /drv/asix.ko
 	insmod /drv/rtl8150.ko
 	insmod /drv/qf9700.ko
-        insmod /drv/mcs7830.ko
+	insmod /drv/mcs7830.ko
+		
+#start memsicd service
+#service memsicd /system/bin/logwrapper /system/bin/memsicd
 
-# gsensor module
-	insmod /drv/mecs.ko	
-	insmod /drv/mxc622x.ko	
-	mkdir /data/misc/sensors 0777 system system	 		
 	
-	mount ext4 /dev/block/nandc /system ro remount
-	mount rootfs rootfs / ro remount
+#init ethernet for adb debug
+#service ipconfig /system/bin/sh /sbin/ipconfig.sh
+#	oneshot
 
-service memsicd /system/bin/logwrapper /system/bin/memsicd
+# insmod hdmi
+	insmod /drv/hdmi.ko
 
+    insmod /drv/sun4i-ir.ko

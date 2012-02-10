@@ -29,10 +29,6 @@ PRODUCT_COPY_FILES += \
 	device/softwinner/crane-common/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
 	device/softwinner/crane-common/gps.conf:system/etc/gps.conf 
 
-# keylayout
-PRODUCT_COPY_FILES += \
-	device/softwinner/crane-common/axp20-supplyer.kl:system/usr/keylayout/axp20-supplyer.kl
-
 # mali lib so
 PRODUCT_COPY_FILES += \
 	device/softwinner/crane-common/egl/gralloc.sun4i.so:system/lib/hw/gralloc.sun4i.so \

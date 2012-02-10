@@ -11,15 +11,15 @@ VideoRenderer *createRenderer(
         const char *componentName,
         OMX_COLOR_FORMATTYPE colorFormat,
         size_t displayWidth, size_t displayHeight,
-        size_t decodedWidth, size_t decodedHeight,
-        int32_t screenId) {
+        size_t decodedWidth, size_t decodedHeight/*,
+        int32_t screenId*/) {
     using android::SoftwinnerHardwareRenderer;
 
     SoftwinnerHardwareRenderer *renderer =
         new SoftwinnerHardwareRenderer(
                 surface, displayWidth, displayHeight,
                 decodedWidth, decodedHeight,
-                colorFormat, screenId);
+                colorFormat/*, screenId*/);
 
     if (renderer->initCheck() != android::OK) {
         delete renderer;
