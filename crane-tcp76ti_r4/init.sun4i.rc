@@ -1,3 +1,14 @@
+import init.sun4i.usb.rc
+
+on early-init
+	export EXTERNAL_STORAGE /mnt/sdcard
+	mkdir /mnt/sdcard 0000 system system
+	# for backwards compatibility
+	symlink /mnt/sdcard /sdcard
+	
+	mkdir /mnt/extsd 0000 system system
+	mkdir /mnt/usbhost1 0000 system system
+
 on fs
     mount ext4 /dev/block/nandc /system wait noatime nodev barrier=0
 
@@ -6,21 +17,25 @@ on fs
 	mount ext4 /dev/block/nandd /data wait noatime nosuid nodev barrier=0
 	setupfs /dev/block/nandd	
 	umount /data
-	exec /system/bin/logwrapper /system/bin/e2fsck -y /dev/block/nandd    
-	exec /system/bin/busybox mount -t ext4 -o noatime,nosuid,nodev,noauto_da_alloc,barrier=0 /dev/block/nandd /data 
+	exec /system/bin/logwrapper /system/bin/e2fsck -y /dev/block/nandd
+	exec /system/bin/busybox mount -t ext4 -o noatime,nosuid,nodev,barrier=0,noauto_da_alloc,commit=15,nodelalloc /dev/block/nandd /data 
 
 # try to mount /cache
     mount ext4 /dev/block/nandg /cache wait noatime nosuid nodev barrier=0
 	setupfs /dev/block/nandg
-    mount ext4 /dev/block/nandg /cache wait noatime nosuid nodev barrier=0
-    format_userdata Teclast
+	umount /cache
+    exec /system/bin/logwrapper /system/bin/e2fsck -y /dev/block/nandg 
+    exec /system/bin/busybox mount -t ext4 -o noatime,nosuid,nodev,barrier=0,noauto_da_alloc,commit=15,nodelalloc /dev/block/nandg /cache 
+        
+    format_userdata /dev/block/nandi Teclast
 
 on boot
-	chown root root /system/xbin/su
-	chmod 6755 /system/xbin/su
 
-	chown system system /drv
-	chmod 0777 /drv	
+# gsensor module
+	insmod /drv/mecs.ko	
+	insmod /drv/mxc622x.ko
+	chmod 777 /system/bin/memsicd	
+	mkdir /data/misc/sensors 0777 system system
 
 #insmod key & tp driver
 	insmod /drv/goodix_touch.ko
@@ -28,33 +43,20 @@ on boot
 	insmod /drv/sun4i-keyboard.ko
 
 # insmod mali driver 
-	insmod /drv/ump.ko
-	insmod /drv/mali.ko
+#	insmod /drv/ump.ko
+#	insmod /drv/mali.ko
 
-# nano wifi module and firmware 
-	chmod 0777 /drv/x_mac.axf
-
-# csi module
+#csi module
 	insmod /drv/videobuf-core.ko
  	insmod /drv/videobuf-dma-contig.ko
 	insmod /drv/sp0838.ko
 # 	insmod /drv/hi704.ko
  	insmod /drv/sun4i_csi0.ko
 
-#usb net module	
-	insmod /drv/usbnet.ko
-	insmod /drv/asix.ko
-	insmod /drv/rtl8150.ko
-	insmod /drv/qf9700.ko
-        insmod /drv/mcs7830.ko
 
-# gsensor module
-	insmod /drv/mecs.ko	
-	insmod /drv/mxc622x.ko	
-	mkdir /data/misc/sensors 0777 system system	 		
+
+#service memsicd /system/bin/logwrapper /system/bin/memsicd
+#	 class main
 	
-	mount ext4 /dev/block/nandc /system ro remount
-	mount rootfs rootfs / ro remount
 
-service memsicd /system/bin/logwrapper /system/bin/memsicd
 

@@ -24,6 +24,7 @@ TARGET_CPU_ABI2 := armeabi
 # Enable NEON feature
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true 
+ARCH_ARM_HAVE_NEON := true
 
 TARGET_BOARD_PLATFORM := exDroid
 TARGET_BOOTLOADER_BOARD_NAME := crane
@@ -34,6 +35,7 @@ CEDARX_CHIP_VERSION := F23
 HAVE_HTC_AUDIO_DRIVER := false
 BOARD_USES_GENERIC_AUDIO := false 
 BOARD_USES_ALSA_AUDIO := true
+BUILD_WITH_ALSA_UTILS := true
 
 #USE_CAMERA_STUB := false
 USE_CAMERA_STUB := true
@@ -48,6 +50,9 @@ endif
 # gpu
 BOARD_USE_GPU := true
 
+USE_OPENGL_RENDERER := true
+BOARD_USE_SKIA_LCDTEXT := true
+
 # wifi 
 AVE_CUSTOM_WIFI_DRIVER_2 := true
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
@@ -60,10 +65,14 @@ BOARD_USR_WIFI := nanowifi
 BOARD_USES_GPS_TYPE := simulator
 
 # use our own libhardware_legacy
-BOARD_USES_PRIV_HARDWARE_LEGACY := true
+#BOARD_USES_PRIV_HARDWARE_LEGACY := true
 
 # use our own su for root
 BOARD_USES_ROOT_SU := true
+
+BOARD_USE_LEGACY_TOUCHSCREEN := true
+BOARD_USE_LEGACY_TRACKPAD := true
+BOARD_USES_AUDIO_LEGACY := true
 
 # hardware module include file path
 TARGET_HARDWARE_INCLUDE := $(TOP)/device/softwinner/crane-common/hardware/include

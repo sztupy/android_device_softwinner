@@ -3,17 +3,19 @@
 $(call inherit-product, device/softwinner/crane-common/device_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-DEVICE_PACKAGE_OVERLAYS := device/softwinner/crane-common/overlay
-
 PRODUCT_PACKAGES += \
 	copybit.sun4i \
-    lights.sun4i \
+	lights.sun4i \
 	overlay.sun4i \
 	display.sun4i \
 	gralloc.sun4i \
 	gps.sun4i \
 	libhardware_legacy \
-	chat	
+	chat \
+	hwcomposer.default \
+	audio.a2dp.default \
+	libaudioutils \
+	libtinyalsa
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -31,13 +33,7 @@ PRODUCT_COPY_FILES += \
 
 # mali lib so
 PRODUCT_COPY_FILES += \
-	device/softwinner/crane-common/egl/gralloc.sun4i.so:system/lib/hw/gralloc.sun4i.so \
-	device/softwinner/crane-common/egl/libMali.so:system/lib/libMali.so \
-	device/softwinner/crane-common/egl/libUMP.so:system/lib/libUMP.so \
 	device/softwinner/crane-common/egl/egl.cfg:system/lib/egl/egl.cfg \
-	device/softwinner/crane-common/egl/libEGL_mali.so:system/lib/egl/libEGL_mali.so \
-	device/softwinner/crane-common/egl/libGLESv1_CM_mali.so:system/lib/egl/libGLESv1_CM_mali.so \
-	device/softwinner/crane-common/egl/libGLESv2_mali.so:system/lib/egl/libGLESv2_mali.so
 
 # bin tools
 PRODUCT_COPY_FILES += \
@@ -86,6 +82,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.ril.hsxpa=1 \
 	ro.ril.gprsclass=10 \
 	wifi.supplicant_scan_interval=15 	
+
 
 # Overrides
 PRODUCT_BRAND  := softwinners

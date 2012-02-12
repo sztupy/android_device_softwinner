@@ -1,10 +1,6 @@
 # crane evb product config
 $(call inherit-product, device/softwinner/crane-common/ProductCommon.mk)
 
-#add overlay
-DEVICE_PACKAGE_OVERLAYS := \
-	device/softwinner/crane-tcp76ti_r4/overlay
-
 PRODUCT_COPY_FILES += \
 	device/softwinner/crane-tcp76ti_r4/ueventd.sun4i.rc:root/ueventd.sun4i.rc \
 	device/softwinner/crane-tcp76ti_r4/init.sun4i.rc:root/init.sun4i.rc \
